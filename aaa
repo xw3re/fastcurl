@@ -38,7 +38,7 @@ pkg install -y python unzip aria2
 
 echo "  [i] Baixando FastTelethon.zip..."
 
-curl -L "https://github.com/xw3re/fastcurl/raw/refs/heads/main/FastTelethon.zip" -o "$HOME/FastTelethon.zip"
+curl -L "https://github.com/xw3re/fastcurl/blob/main/FastTelethon.zip?raw=true" -o "$HOME/FastTelethon.zip"
 
 
 

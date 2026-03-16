@@ -1,0 +1,79 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+set -e
+
+
+
+echo ""
+
+echo "  Myrient - Instalando no Termux"
+
+echo ""
+
+
+
+cd "$HOME"
+
+
+
+echo "  [i] Atualizando repositorios..."
+
+pkg update -y
+
+
+
+echo "  [i] Atualizando pacotes..."
+
+pkg upgrade -y
+
+
+
+echo "  [i] Instalando python, unzip e aria2..."
+
+pkg install -y python unzip aria2
+
+
+
+echo "  [i] Baixando FastTelethon.zip..."
+
+curl -L "https://download1076.mediafire.com/v6vcexxf2jjgu85kgQXpzgu4Mg8oAO3Q9sWuv7RiMwBDAEiH32j2aqiqJEShdjO_9Oz57NCOUHW9Ussd21UtzFU0cZKbvsI9V0Ecgh1-xDXKqljt2ferpFVikHHeXZabWSuuw7GDyHfMJe65iBLGBx6mkN1DF0Sqa5_iiWMD7PvPlLSk/6c25dr1r56m1enm/FastTelethon.zip" -o FastTelethon.zip
+
+
+
+echo "  [i] Descompactando..."
+
+unzip -o FastTelethon.zip
+
+mv FastTelethon/* . 2>/dev/null || true
+
+rm -rf FastTelethon FastTelethon.zip
+
+
+
+echo "  [i] Criando ambiente virtual..."
+
+python -m venv venv
+
+
+
+echo "  [i] Instalando requisitos Python..."
+
+venv/bin/pip install --upgrade pip
+
+venv/bin/pip install telethon httpx beautifulsoup4 cryptg
+
+
+
+echo "  [i] Criando run.sh..."
+
+printf '#!/data/data/com.termux/files/usr/bin/bash\ncd "$HOME"\nsource venv/bin/activate\npython myrient.py\n' > "$HOME/run.sh"
+
+chmod +x "$HOME/run.sh"
+
+
+
+echo ""
+
+echo "  [ok] Instalacao concluida! Execute: ./run.sh"
+
+echo ""

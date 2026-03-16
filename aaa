@@ -1,5 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
+
+
 set -e
 
 
@@ -36,37 +38,45 @@ pkg install -y python unzip aria2
 
 echo "  [i] Baixando FastTelethon.zip..."
 
-curl -L "https://download1076.mediafire.com/v6vcexxf2jjgu85kgQXpzgu4Mg8oAO3Q9sWuv7RiMwBDAEiH32j2aqiqJEShdjO_9Oz57NCOUHW9Ussd21UtzFU0cZKbvsI9V0Ecgh1-xDXKqljt2ferpFVikHHeXZabWSuuw7GDyHfMJe65iBLGBx6mkN1DF0Sqa5_iiWMD7PvPlLSk/6c25dr1r56m1enm/FastTelethon.zip" -o FastTelethon.zip
+curl -L "https://download1076.mediafire.com/v6vcexxf2jjgu85kgQXpzgu4Mg8oAO3Q9sWuv7RiMwBDAEiH32j2aqiqJEShdjO_9Oz57NCOUHW9Ussd21UtzFU0cZKbvsI9V0Ecgh1-xDXKqljt2ferpFVikHHeXZabWSuuw7GDyHfMJe65iBLGBx6mkN1DF0Sqa5_iiWMD7PvPlLSk/6c25dr1r56m1enm/FastTelethon.zip" -o "$HOME/FastTelethon.zip"
 
 
 
 echo "  [i] Descompactando..."
 
-unzip -o FastTelethon.zip
+unzip -o "$HOME/FastTelethon.zip" -d "$HOME"
 
-mv FastTelethon/* . 2>/dev/null || true
+cp -r "$HOME/FastTelethon/"* "$HOME/"
 
-rm -rf FastTelethon FastTelethon.zip
+rm -rf "$HOME/FastTelethon" "$HOME/FastTelethon.zip"
 
 
 
 echo "  [i] Criando ambiente virtual..."
 
-python -m venv venv
+python -m venv "$HOME/venv"
 
 
 
 echo "  [i] Instalando requisitos Python..."
 
-venv/bin/pip install --upgrade pip
+"$HOME/venv/bin/pip" install --upgrade pip
 
-venv/bin/pip install telethon httpx beautifulsoup4 cryptg
+"$HOME/venv/bin/pip" install telethon httpx beautifulsoup4 tgcrypto
 
 
 
 echo "  [i] Criando run.sh..."
 
-printf '#!/data/data/com.termux/files/usr/bin/bash\ncd "$HOME"\nsource venv/bin/activate\npython myrient.py\n' > "$HOME/run.sh"
+printf '#!/data/data/com.termux/files/usr/bin/bash
+
+cd "$HOME"
+
+source "$HOME/venv/bin/activate"
+
+python "$HOME/myrient.py"
+
+' > "$HOME/run.sh"
 
 chmod +x "$HOME/run.sh"
 
